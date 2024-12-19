@@ -101,7 +101,7 @@ if st.button("Submit"):
 
         for index, row in guests_data.iterrows():
             cursor.execute("""
-                INSERT INTO guest_data (name, age, contact, arrival_date, arrival_time, checkout_date, checkout_time, departure_date, departure_time, arrival_travel_mode, departure_travel_mode)
+                INSERT INTO public.guest_data (name, age, contact, arrival_date, arrival_time, checkout_date, checkout_time, departure_date, departure_time, arrival_travel_mode, departure_travel_mode)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
 
             """, (row['name'], row['age'], row['contact'], row['arrival_date'], row['arrival_time'], 
