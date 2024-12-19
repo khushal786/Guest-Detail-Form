@@ -9,6 +9,8 @@ def get_db_connection():
         host="35.202.241.235",
         database="kd",
         user="khushal",
+        table="guest_data",
+        schema="public",
         password="khushal@108"
     )
     return connection
