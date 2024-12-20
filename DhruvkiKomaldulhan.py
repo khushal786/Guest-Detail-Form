@@ -57,7 +57,6 @@ form_data["arrival_date"] = arrival_date
 form_data["arrival_time"] = arrival_time
 
 # Checkout date with restriction and default time logic
-st.markdown("**Checkout Date Description:** Allowed checkout dates are 26th and 27th January 2025 only.")
 checkout_date = st.date_input("Checkout Date", value=datetime.date(2025, 1, 26))
 
 if checkout_date not in [datetime.date(2025, 1, 26), datetime.date(2025, 1, 27)]:
@@ -66,9 +65,9 @@ if checkout_date not in [datetime.date(2025, 1, 26), datetime.date(2025, 1, 27)]
 # Default checkout time for 27th January 2025
 if checkout_date == datetime.date(2025, 1, 27):
     checkout_time = datetime.time(10, 0)
-    st.markdown("Default Checkout time is :"
+    st.markdown("Default Checkout time :"
         "<span style='font-weight: bold; border-radius: 4px;'>10:00 AM</span> "
-        "for 27th January 2025.",
+        "on 27th January 2025.",
         unsafe_allow_html=True)
 else:
     checkout_time = st.time_input("Checkout Time", value=datetime.time(10, 0))
