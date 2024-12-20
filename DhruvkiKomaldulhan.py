@@ -67,7 +67,8 @@ if checkout_date not in [datetime.date(2025, 1, 26), datetime.date(2025, 1, 27)]
 if checkout_date == datetime.date(2025, 1, 27):
     checkout_time = datetime.time(10, 0)
     st.markdown("Default Checkout time is :"
-        "<span style='background-color: #4A628A; font-weight: bold; border-radius: 3px;'>10:00 AM for 27th January 2025.</span> ",
+        "<span style='font-weight: bold; border-radius: 4px;'>10:00 AM</span> "
+        "for 27th January 2025.",
         unsafe_allow_html=True)
 else:
     checkout_time = st.time_input("Checkout Time", value=datetime.time(10, 0))
