@@ -40,10 +40,6 @@ form_data["guests"] = guests
 if not contact_present:
     st.error("Please provide at least one contact number.")
 
-# File upload (optional)
-uploaded_file = st.file_uploader("Upload a document (PDF or JPG, optional)", type=["pdf", "jpg"])
-form_data["uploaded_file"] = uploaded_file
-
 # Mode of travel for arrival
 arrival_travel_mode = st.selectbox("Mode of travel for arrival", ["air", "road", "train"])
 form_data["arrival_travel_mode"] = arrival_travel_mode
