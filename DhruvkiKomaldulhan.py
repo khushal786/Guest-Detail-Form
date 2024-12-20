@@ -3,6 +3,8 @@ import pandas as pd
 import datetime
 import psycopg2
 
+st.image("image_header.png")
+
 # PostgreSQL connection setup
 def get_db_connection():
     connection = psycopg2.connect(
@@ -64,7 +66,9 @@ if checkout_date not in [datetime.date(2025, 1, 26), datetime.date(2025, 1, 27)]
 # Default checkout time for 27th January 2025
 if checkout_date == datetime.date(2025, 1, 27):
     checkout_time = datetime.time(10, 0)
-    st.markdown("Checkout time is **10:00 AM** for 27th January 2025.")
+    st.markdown("Default Checkout time is :"
+        "<span style='background-color: #4A628A; font-weight: bold; border-radius: 3px;'>10:00 AM for 27th January 2025.</span> ",
+        unsafe_allow_html=True)
 else:
     checkout_time = st.time_input("Checkout Time", value=datetime.time(10, 0))
 
