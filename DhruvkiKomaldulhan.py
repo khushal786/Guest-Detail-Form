@@ -64,7 +64,7 @@ if checkout_date not in [datetime.date(2025, 1, 26), datetime.date(2025, 1, 27)]
 # Default checkout time for 27th January 2025
 if checkout_date == datetime.date(2025, 1, 27):
     checkout_time = datetime.time(10, 0)
-    st.markdown("Checkout time is set to **10:00 AM** by default for 27th January 2025.")
+    st.markdown("Checkout time is **10:00 AM** for 27th January 2025.")
 else:
     checkout_time = st.time_input("Checkout Time", value=datetime.time(10, 0))
 
