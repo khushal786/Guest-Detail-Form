@@ -7,9 +7,9 @@ import psycopg2
 def get_db_connection():
     connection = psycopg2.connect(
         host="34.133.18.109",
-        database="kd",
-        user="khushal",
-        password="khushal@108"
+        database="postgres",
+        user="postgres",
+        password="postgres108"
     )
     return connection
 
