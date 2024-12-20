@@ -6,7 +6,7 @@ import psycopg2
 # PostgreSQL connection setup
 def get_db_connection():
     connection = psycopg2.connect(
-        host="34.70.36.104",
+        host="34.133.18.109",
         database="kd",
         user="khushal",
         password="khushal@108"
