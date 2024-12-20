@@ -122,4 +122,4 @@ if st.button("Submit"):
         cursor.close()
         conn.close()
 
-        st.success("Data saved successfully. Your Presence is awaited!"")
+        st.success("Data saved successfully. Your Presence is awaited!")
