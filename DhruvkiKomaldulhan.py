@@ -44,19 +44,30 @@ if not contact_present:
 arrival_travel_mode = st.selectbox("Mode of travel for arrival", ["air", "road", "train"])
 form_data["arrival_travel_mode"] = arrival_travel_mode
 
+# New field: Arrival Location
+arrival_location = st.text_input("Arrival Location", placeholder="Enter the location of arrival")
+form_data["arrival_location"] = arrival_location
+
 # Date and time of arrival (separate fields)
 arrival_date = st.date_input("Date of Arrival")
 arrival_time = st.time_input("Time of Arrival", value=datetime.time(22, 0))
 form_data["arrival_date"] = arrival_date
 form_data["arrival_time"] = arrival_time
 
-# Checkout date with restriction
+# Checkout date with restriction and default time logic
 st.markdown("**Checkout Date Description:** Allowed checkout dates are 26th and 27th January 2025 only.")
 checkout_date = st.date_input("Checkout Date", value=datetime.date(2025, 1, 26))
+
 if checkout_date not in [datetime.date(2025, 1, 26), datetime.date(2025, 1, 27)]:
     st.error("Please select a valid checkout date (26th or 27th January 2025).")
 
-checkout_time = st.time_input("Checkout Time", value=datetime.time(10, 0))
+# Default checkout time for 27th January 2025
+if checkout_date == datetime.date(2025, 1, 27):
+    checkout_time = datetime.time(10, 0)
+    st.markdown("Checkout time is set to **10:00 AM** by default for 27th January 2025.")
+else:
+    checkout_time = st.time_input("Checkout Time", value=datetime.time(10, 0))
+
 form_data["checkout_date"] = checkout_date
 form_data["checkout_time"] = checkout_time
 
@@ -77,6 +88,8 @@ if st.button("Submit"):
         st.error("At least one contact number must be provided.")
     elif checkout_date not in [datetime.date(2025, 1, 26), datetime.date(2025, 1, 27)]:
         st.error("Invalid checkout date. Please select 26th or 27th January 2025.")
+    elif not arrival_location:
+        st.error("Please provide the arrival location.")
     else:
         # Convert the form data to a DataFrame
         guests_data = pd.DataFrame(form_data["guests"])
@@ -89,6 +102,7 @@ if st.button("Submit"):
         guests_data['departure_date'] = form_data["departure_date"]
         guests_data['departure_time'] = form_data["departure_time"].strftime('%H:%M')
         guests_data['arrival_travel_mode'] = form_data["arrival_travel_mode"]
+        guests_data['arrival_location'] = form_data["arrival_location"]  # New field
         guests_data['departure_travel_mode'] = form_data["departure_travel_mode"]
 
         # Save the data to PostgreSQL
@@ -97,43 +111,15 @@ if st.button("Submit"):
 
         for index, row in guests_data.iterrows():
             cursor.execute("""
-                INSERT INTO public.guest_data (name, age, contact, arrival_date, arrival_time, checkout_date, checkout_time, departure_date, departure_time, arrival_travel_mode, departure_travel_mode)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
-
+                INSERT INTO guest_data (name, age, contact, arrival_date, arrival_time, checkout_date, checkout_time, 
+                                        departure_date, departure_time, arrival_travel_mode, arrival_location, departure_travel_mode)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, (row['name'], row['age'], row['contact'], row['arrival_date'], row['arrival_time'], 
                   row['checkout_date'], row['checkout_time'], row['departure_date'], row['departure_time'], 
-                  row['arrival_travel_mode'], row['departure_travel_mode']))
+                  row['arrival_travel_mode'], row['arrival_location'], row['departure_travel_mode']))
         
         conn.commit()
         cursor.close()
         conn.close()
 
         st.success("Data saved successfully to PostgreSQL!")
-
-        # Allow the user to download the CSV file from the PostgreSQL data
-        def fetch_data_from_db():
-            conn = get_db_connection()
-            query = "SELECT * FROM guest_data"
-            df = pd.read_sql(query, conn)
-            conn.close()
-            return df
-
-        # Fetch data from the database
-        all_data = fetch_data_from_db()
-
-        # Convert the data to CSV format for download
-        def convert_df_to_csv(df):
-            return df.to_csv(index=False).encode('utf-8')
-
-        csv_data = convert_df_to_csv(all_data)
-
-        # Add a download button
-        st.download_button(
-            label="Download CSV",
-            data=csv_data,
-            file_name='guest_data.csv',
-            mime='text/csv'
-        )
-
-        # Display the form data
-        st.write(form_data)
