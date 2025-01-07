@@ -8,7 +8,7 @@ st.image("image_header.png")
 # PostgreSQL connection setup
 def get_db_connection():
     connection = psycopg2.connect(
-        host="104.198.165.4",
+        host="34.55.180.159",
         database="postgres",
         user="postgres",
         password="postgres108"
