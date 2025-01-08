@@ -59,7 +59,7 @@ arrival_travel_mode = st.selectbox("Mode of travel for arrival", ["air", "bus", 
 form_data["arrival_travel_mode"] = arrival_travel_mode
 
 # Conditional fields based on "Self" option
-if arrival_travel_mode != "self":
+if arrival_travel_mode != "Own Vechile":
     # Arrival location
     arrival_location = st.text_input("Arrival Location", placeholder="Enter the location of arrival")
     form_data["arrival_location"] = arrival_location
