@@ -58,6 +58,17 @@ if not contact_present:
 arrival_travel_mode = st.selectbox("Mode of travel for arrival", ["air", "road", "train", "self"])
 form_data["arrival_travel_mode"] = arrival_travel_mode
 
+# Additional fields for train or flight number during arrival
+if arrival_travel_mode == "train":
+    arrival_train_number = st.text_input("Train Number for Arrival")
+    form_data["arrival_train_number"] = arrival_train_number
+elif arrival_travel_mode == "air":
+    arrival_flight_number = st.text_input("Flight Number for Arrival")
+    form_data["arrival_flight_number"] = arrival_flight_number
+else:
+    form_data["arrival_train_number"] = None
+    form_data["arrival_flight_number"] = None
+
 # Conditional fields based on "Self" option
 if arrival_travel_mode != "self":
     # Arrival location
@@ -74,6 +85,17 @@ if arrival_travel_mode != "self":
     departure_travel_mode = st.selectbox("Mode of travel for departure", ["air", "road", "train"])
     form_data["departure_travel_mode"] = departure_travel_mode
 
+    # Additional fields for train or flight number during departure
+    if departure_travel_mode == "train":
+        departure_train_number = st.text_input("Train Number for Departure")
+        form_data["departure_train_number"] = departure_train_number
+    elif departure_travel_mode == "air":
+        departure_flight_number = st.text_input("Flight Number for Departure")
+        form_data["departure_flight_number"] = departure_flight_number
+    else:
+        form_data["departure_train_number"] = None
+        form_data["departure_flight_number"] = None
+
     # Date and time of departure
     departure_date = st.date_input("Date of Departure")
     departure_time = st.time_input("Time of Departure", value=datetime.time(22, 0))
@@ -86,6 +108,8 @@ else:
     form_data["departure_travel_mode"] = None
     form_data["departure_date"] = None
     form_data["departure_time"] = None
+    form_data["departure_train_number"] = None
+    form_data["departure_flight_number"] = None
 
 # Checkout date with restriction and default time logic
 checkout_date = st.date_input("Checkout Date", value=datetime.date(2025, 1, 26))
@@ -133,6 +157,10 @@ if st.button("Submit"):
         guests_data['arrival_travel_mode'] = form_data["arrival_travel_mode"]
         guests_data['arrival_location'] = form_data["arrival_location"]
         guests_data['departure_travel_mode'] = form_data["departure_travel_mode"]
+        guests_data['arrival_train_number'] = form_data["arrival_train_number"]
+        guests_data['arrival_flight_number'] = form_data["arrival_flight_number"]
+        guests_data['departure_train_number'] = form_data["departure_train_number"]
+        guests_data['departure_flight_number'] = form_data["departure_flight_number"]
 
         # Save the data to PostgreSQL
         conn = get_db_connection()
@@ -142,11 +170,15 @@ if st.button("Submit"):
             cursor.execute("""
                 INSERT INTO guest_data (name, age, aadhaar, contact, arrival_date, arrival_time, arrival_location, 
                                         checkout_date, checkout_time, departure_date, departure_time, 
-                                        arrival_travel_mode, departure_travel_mode)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                                        arrival_travel_mode, departure_travel_mode, 
+                                        arrival_train_number, arrival_flight_number, 
+                                        departure_train_number, departure_flight_number)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, (row['name'], row['age'], row['aadhaar'], row['contact'], row['arrival_date'], row['arrival_time'],
                   row['arrival_location'], row['checkout_date'], row['checkout_time'], row['departure_date'], 
-                  row['departure_time'], row['arrival_travel_mode'], row['departure_travel_mode']))
+                  row['departure_time'], row['arrival_travel_mode'], row['departure_travel_mode'], 
+                  row['arrival_train_number'], row['arrival_flight_number'], 
+                  row['departure_train_number'], row['departure_flight_number']))
         
         conn.commit()
         cursor.close()
