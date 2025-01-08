@@ -106,6 +106,8 @@ if st.button("Submit"):
         st.error("Invalid checkout date. Please select 26th or 27th January 2025.")
     elif not arrival_location:
         st.error("Please provide the arrival location.")
+    elif not aadhaar_valid:
+        st.error("Please ensure all guests have valid 12-digit Aadhaar numbers.")
     else:
         # Convert the form data to a DataFrame
         guests_data = pd.DataFrame(form_data["guests"])
