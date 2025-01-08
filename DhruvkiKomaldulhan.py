@@ -55,7 +55,7 @@ if not contact_present:
     st.error("Please provide at least one contact number.")
 
 # Mode of travel for arrival
-arrival_travel_mode = st.selectbox("Mode of travel for arrival", ["air", "road", "train", "self"])
+arrival_travel_mode = st.selectbox("Mode of travel for arrival", ["air", "bus", "train", "Own Vechile"])
 form_data["arrival_travel_mode"] = arrival_travel_mode
 
 # Conditional fields based on "Self" option
@@ -71,7 +71,7 @@ if arrival_travel_mode != "self":
     form_data["arrival_time"] = arrival_time
 
     # Mode of travel for departure
-    departure_travel_mode = st.selectbox("Mode of travel for departure", ["air", "road", "train", "self"])
+    departure_travel_mode = st.selectbox("Mode of travel for departure", ["air", "bus", "train", "Own Vechile"])
     form_data["departure_travel_mode"] = departure_travel_mode
 
     # Date and time of departure
