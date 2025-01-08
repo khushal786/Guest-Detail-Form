@@ -23,18 +23,22 @@ num_guests = st.number_input("Number of Guests", min_value=1, max_value=10, step
 
 # Dynamic input fields for guest names, ages, and contact numbers
 guests = []
-contact_present = False  # Flag to check if at least one contact number is present
+contact_present = False # Flag to check if at least one contact number is present
+aadhaar_valid = True 
 for i in range(num_guests):
     guest_name = st.text_input(f"Name of Guest {i+1}")
     guest_age = st.number_input(f"Age of Guest {i+1} (2 digits only)", min_value=10, max_value=99, step=1)
+    guest_aadhaar = st.text_input(f"Aadhaar Number of Guest {i+1} (12 digits)")
     guest_contact = st.text_input(f"Contact Number of Guest {i+1} (10 digits, optional)")
+        if not guest_aadhaar or not guest_aadhaar.isdigit() or len(guest_aadhaar) != 12:
+            aadhaar_valid = False
+            st.warning(f"Aadhaar number for Guest {i+1} must be exactly 12 digits and cannot be empty.")
+            if guest_contact:
+                contact_present = True
+                    if len(guest_contact) != 10:
+                        st.warning(f"Contact number for Guest {i+1} must be exactly 10 digits.")
 
-    if guest_contact:
-        contact_present = True
-        if len(guest_contact) != 10:
-            st.warning(f"Contact number for Guest {i+1} must be exactly 10 digits.")
-
-    guests.append({"name": guest_name, "age": guest_age, "contact": guest_contact})
+    guests.append({"name": guest_name, "age": guest_age, "aadhaar": guest_aadhaar, "contact": guest_contact})
 
 form_data["guests"] = guests
 
@@ -115,12 +119,13 @@ if st.button("Submit"):
 
         for index, row in guests_data.iterrows():
             cursor.execute("""
-                INSERT INTO guest_data (name, age, contact, arrival_date, arrival_time, checkout_date, checkout_time, 
-                                        departure_date, departure_time, arrival_travel_mode, arrival_location, departure_travel_mode)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """, (row['name'], row['age'], row['contact'], row['arrival_date'], row['arrival_time'], 
-                  row['checkout_date'], row['checkout_time'], row['departure_date'], row['departure_time'], 
-                  row['arrival_travel_mode'], row['arrival_location'], row['departure_travel_mode']))
+                INSERT INTO guest_data (name, age, aadhaar, contact, arrival_date, arrival_time, arrival_location, 
+                                        checkout_date, checkout_time, departure_date, departure_time, 
+                                        arrival_travel_mode, departure_travel_mode)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (row['name'], row['age'], row['aadhaar'], row['contact'], row['arrival_date'], row['arrival_time'],
+                  row['arrival_location'], row['checkout_date'], row['checkout_time'], row['departure_date'], 
+                  row['departure_time'], row['arrival_travel_mode'], row['departure_travel_mode']))
         
         conn.commit()
         cursor.close()
