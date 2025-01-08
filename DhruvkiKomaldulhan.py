@@ -28,17 +28,25 @@ aadhaar_valid = True
 for i in range(num_guests):
     guest_name = st.text_input(f"Name of Guest {i+1}")
     guest_age = st.number_input(f"Age of Guest {i+1} (2 digits only)", min_value=10, max_value=99, step=1)
-    guest_aadhaar = st.text_input(f"Aadhaar Number of Guest {i+1} (12 digits)")
-    guest_contact = st.text_input(f"Contact Number of Guest {i+1} (10 digits, optional)")
-        if not guest_aadhaar or not guest_aadhaar.isdigit() or len(guest_aadhaar) != 12:
-            aadhaar_valid = False
-            st.warning(f"Aadhaar number for Guest {i+1} must be exactly 12 digits and cannot be empty.")
-            if guest_contact:
-                contact_present = True
-                    if len(guest_contact) != 10:
-                        st.warning(f"Contact number for Guest {i+1} must be exactly 10 digits.")
 
-    guests.append({"name": guest_name, "age": guest_age, "aadhaar": guest_aadhaar, "contact": guest_contact})
+    # Aadhaar Number Field
+    guest_aadhaar = st.text_input(f"Aadhaar Number of Guest {i+1} (12 digits)")
+    if not guest_aadhaar or not guest_aadhaar.isdigit() or len(guest_aadhaar) != 12:
+        aadhaar_valid = False
+        st.warning(f"Aadhaar number for Guest {i+1} must be exactly 12 digits and cannot be empty.")
+
+    guest_contact = st.text_input(f"Contact Number of Guest {i+1} (10 digits, optional)")
+    if guest_contact:
+        contact_present = True
+        if len(guest_contact) != 10:
+            st.warning(f"Contact number for Guest {i+1} must be exactly 10 digits.")
+
+    guests.append({
+        "name": guest_name,
+        "age": guest_age,
+        "aadhaar": guest_aadhaar,
+        "contact": guest_contact
+    })
 
 form_data["guests"] = guests
 
