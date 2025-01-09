@@ -60,6 +60,14 @@ form_data["arrival_travel_mode"] = arrival_travel_mode
 
 # Conditional fields based on "Self" option
 if arrival_travel_mode != "Own Vechile":
+    # Ensure default None for transport-related fields
+    form_data["arrival_train_number"] = None
+    form_data["departure_train_number"] = None
+    form_data["arrival_flight_number"] = None
+    form_data["departure_flight_number"] = None
+    form_data["arrival_airline_name"] = None
+    form_data["departure_airline_name"] = None
+
     # Arrival location
     arrival_location = st.text_input("Arrival Location", placeholder="Enter the location of arrival")
     form_data["arrival_location"] = arrival_location
@@ -81,9 +89,6 @@ if arrival_travel_mode != "Own Vechile":
     form_data["departure_time"] = departure_time
 
     # Train number for arrival and departure
-    arrival_train_number = None
-    departure_train_number = None
-
     if arrival_travel_mode == "train":
         arrival_train_number = st.text_input("Train Number for Arrival")
         form_data["arrival_train_number"] = arrival_train_number
@@ -93,11 +98,6 @@ if arrival_travel_mode != "Own Vechile":
         form_data["departure_train_number"] = departure_train_number
 
     # Flight number and airline name for arrival and departure
-    arrival_flight_number = None
-    departure_flight_number = None
-    arrival_airline_name = None
-    departure_airline_name = None
-
     if arrival_travel_mode == "air":
         arrival_flight_number = st.text_input("Flight Number for Arrival")
         arrival_airline_name = st.text_input("Airline Name for Arrival")
@@ -110,6 +110,7 @@ if arrival_travel_mode != "Own Vechile":
         form_data["departure_flight_number"] = departure_flight_number
         form_data["departure_airline_name"] = departure_airline_name
 else:
+    # Default None for all transport-related keys when "Own Vechile"
     form_data["arrival_location"] = None
     form_data["arrival_date"] = None
     form_data["arrival_time"] = None
