@@ -197,7 +197,7 @@ if st.button("Submit"):
         cursor.close()
         conn.close()
 
-        st.success("Form submitted successfully and data saved to PostgreSQL!")
+        st.success("Form submitted successfully 🎉. Your Presence is awaited!")
 
  # Big right tick
         st.markdown(
