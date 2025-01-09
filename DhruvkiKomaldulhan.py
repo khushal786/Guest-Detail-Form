@@ -198,3 +198,13 @@ if st.button("Submit"):
         conn.close()
 
         st.success("Form submitted successfully and data saved to PostgreSQL!")
+
+ # Big right tick
+        st.markdown(
+            """
+            <div style="text-align: center; margin-top: 20px;">
+                <span style="font-size: 100px; color: green;">✅</span>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
