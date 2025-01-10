@@ -93,11 +93,15 @@ if arrival_travel_mode != "Own Vechile":
         form_data["arrival_train_number"] = st.text_input("Train Number for Arrival")
     if not form_data["arrival_train_number"]:
         st.warning("Train Number for Arrival is required as you selected 'train' as the arrival mode.")
+    else:
+        form_data["arrival_train_number"] = None
 
     if departure_travel_mode == "train":
         form_data["departure_train_number"] = st.text_input("Train Number for Departure")
     if not form_data["departure_train_number"]:
         st.warning("Train Number for Departure is required as you selected 'train' as the departure mode.")
+    else:
+        form_data["departure_train_number"] = None
 
     # Flight number and airline name for arrival and departure
     if arrival_travel_mode == "air":
@@ -107,6 +111,9 @@ if arrival_travel_mode != "Own Vechile":
         st.warning("Flight Number for Arrival is required as you selected 'air' as the arrival mode.")
     if not form_data["arrival_airline_name"]:
         st.warning("Airline Name for Arrival is required as you selected 'air' as the arrival mode.")
+    else:
+        form_data["arrival_flight_number"] = None
+        form_data["arrival_airline_name"] = None
         
     if departure_travel_mode == "air":
         form_data["departure_flight_number"] = st.text_input("Flight Number for Departure")
@@ -115,6 +122,9 @@ if arrival_travel_mode != "Own Vechile":
         st.warning("Flight Number for Departure is required as you selected 'air' as the departure mode.")
     if not form_data["departure_airline_name"]:
         st.warning("Airline Name for Departure is required as you selected 'air' as the departure mode.")
+    else:
+        form_data["departure_flight_number"] = None
+        form_data["departure_airline_name"] = None
         
 else:
     # Default None for all transport-related keys when "Own Vechile"
