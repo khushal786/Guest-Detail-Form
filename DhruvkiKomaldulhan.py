@@ -92,14 +92,14 @@ if arrival_travel_mode != "Own Vechile":
     if arrival_travel_mode == "train":
         form_data["arrival_train_number"] = st.text_input("Train Number for Arrival")
     if not form_data["arrival_train_number"]:
-        st.warning("Train Number for Arrival is required as you selected 'train' as the arrival mode.")
+        st.warning("Please enter the train number for arrival as 'train' is selected as the arrival mode.")
     else:
         form_data["arrival_train_number"] = None
 
     if departure_travel_mode == "train":
         form_data["departure_train_number"] = st.text_input("Train Number for Departure")
     if not form_data["departure_train_number"]:
-        st.warning("Train Number for Departure is required as you selected 'train' as the departure mode.")
+        st.warning("Please enter the train number for departure as 'train' is selected as the departure mode.")
     else:
         form_data["departure_train_number"] = None
 
@@ -107,21 +107,21 @@ if arrival_travel_mode != "Own Vechile":
     if arrival_travel_mode == "air":
         form_data["arrival_flight_number"] = st.text_input("Flight Number for Arrival")
         form_data["arrival_airline_name"] = st.text_input("Airline Name for Arrival")
-    if not form_data["arrival_flight_number"]:
-        st.warning("Flight Number for Arrival is required as you selected 'air' as the arrival mode.")
-    if not form_data["arrival_airline_name"]:
-        st.warning("Airline Name for Arrival is required as you selected 'air' as the arrival mode.")
+        if not form_data["arrival_flight_number"]:
+            st.warning("Please enter the flight number for arrival as 'air' is selected as the arrival mode.")
+        if not form_data["arrival_airline_name"]:
+            st.warning("Please enter the airline name for arrival as 'air' is selected as the arrival mode.")
     else:
         form_data["arrival_flight_number"] = None
         form_data["arrival_airline_name"] = None
-        
+
     if departure_travel_mode == "air":
         form_data["departure_flight_number"] = st.text_input("Flight Number for Departure")
         form_data["departure_airline_name"] = st.text_input("Airline Name for Departure")
-    if not form_data["departure_flight_number"]:
-        st.warning("Flight Number for Departure is required as you selected 'air' as the departure mode.")
-    if not form_data["departure_airline_name"]:
-        st.warning("Airline Name for Departure is required as you selected 'air' as the departure mode.")
+        if not form_data["departure_flight_number"]:
+            st.warning("Please enter the flight number for departure as 'air' is selected as the departure mode.")
+        if not form_data["departure_airline_name"]:
+            st.warning("Please enter the airline name for departure as 'air' is selected as the departure mode.")
     else:
         form_data["departure_flight_number"] = None
         form_data["departure_airline_name"] = None
