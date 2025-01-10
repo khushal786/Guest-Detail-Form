@@ -92,14 +92,12 @@ if arrival_travel_mode != "Own Vechile":
     if arrival_travel_mode == "train":
         form_data["arrival_train_number"] = st.text_input("Train Number for Arrival")
     if not form_data["arrival_train_number"]:
-        st.warning("Please enter the train number for arrival as 'train' is selected as the arrival mode.")
-    else:
-        form_data["arrival_train_number"] = None
+        st.warning("Train Number for Arrival is required as you selected 'train' as the arrival mode.")
 
     if departure_travel_mode == "train":
         form_data["departure_train_number"] = st.text_input("Train Number for Departure")
     if not form_data["departure_train_number"]:
-        st.warning("Please enter the train number for departure as 'train' is selected as the departure mode.")
+        st.warning("Train Number for Departure is required as you selected 'train' as the departure mode.")
     else:
         form_data["departure_train_number"] = None
 
