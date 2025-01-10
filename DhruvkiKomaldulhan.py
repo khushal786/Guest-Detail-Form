@@ -90,27 +90,27 @@ if arrival_travel_mode != "Own Vechile":
 
     # Train number for arrival and departure
     if arrival_travel_mode == "train":
-    form_data["arrival_train_number"] = st.text_input("Train Number for Arrival")
+        form_data["arrival_train_number"] = st.text_input("Train Number for Arrival")
     if not form_data["arrival_train_number"]:
         st.warning("Train Number for Arrival is required as you selected 'train' as the arrival mode.")
 
     if departure_travel_mode == "train":
-    form_data["departure_train_number"] = st.text_input("Train Number for Departure")
+        form_data["departure_train_number"] = st.text_input("Train Number for Departure")
     if not form_data["departure_train_number"]:
         st.warning("Train Number for Departure is required as you selected 'train' as the departure mode.")
 
     # Flight number and airline name for arrival and departure
     if arrival_travel_mode == "air":
-    form_data["arrival_flight_number"] = st.text_input("Flight Number for Arrival")
-    form_data["arrival_airline_name"] = st.text_input("Airline Name for Arrival")
+        form_data["arrival_flight_number"] = st.text_input("Flight Number for Arrival")
+        form_data["arrival_airline_name"] = st.text_input("Airline Name for Arrival")
     if not form_data["arrival_flight_number"]:
         st.warning("Flight Number for Arrival is required as you selected 'air' as the arrival mode.")
     if not form_data["arrival_airline_name"]:
         st.warning("Airline Name for Arrival is required as you selected 'air' as the arrival mode.")
         
     if departure_travel_mode == "air":
-    form_data["departure_flight_number"] = st.text_input("Flight Number for Departure")
-    form_data["departure_airline_name"] = st.text_input("Airline Name for Departure")
+        form_data["departure_flight_number"] = st.text_input("Flight Number for Departure")
+        form_data["departure_airline_name"] = st.text_input("Airline Name for Departure")
     if not form_data["departure_flight_number"]:
         st.warning("Flight Number for Departure is required as you selected 'air' as the departure mode.")
     if not form_data["departure_airline_name"]:
