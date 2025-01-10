@@ -90,25 +90,32 @@ if arrival_travel_mode != "Own Vechile":
 
     # Train number for arrival and departure
     if arrival_travel_mode == "train":
-        arrival_train_number = st.text_input("Train Number for Arrival")
-        form_data["arrival_train_number"] = arrival_train_number
+    form_data["arrival_train_number"] = st.text_input("Train Number for Arrival")
+    if not form_data["arrival_train_number"]:
+        st.warning("Train Number for Arrival is required as you selected 'train' as the arrival mode.")
 
     if departure_travel_mode == "train":
-        departure_train_number = st.text_input("Train Number for Departure")
-        form_data["departure_train_number"] = departure_train_number
+    form_data["departure_train_number"] = st.text_input("Train Number for Departure")
+    if not form_data["departure_train_number"]:
+        st.warning("Train Number for Departure is required as you selected 'train' as the departure mode.")
 
     # Flight number and airline name for arrival and departure
     if arrival_travel_mode == "air":
-        arrival_flight_number = st.text_input("Flight Number for Arrival")
-        arrival_airline_name = st.text_input("Airline Name for Arrival")
-        form_data["arrival_flight_number"] = arrival_flight_number
-        form_data["arrival_airline_name"] = arrival_airline_name
-
+    form_data["arrival_flight_number"] = st.text_input("Flight Number for Arrival")
+    form_data["arrival_airline_name"] = st.text_input("Airline Name for Arrival")
+    if not form_data["arrival_flight_number"]:
+        st.warning("Flight Number for Arrival is required as you selected 'air' as the arrival mode.")
+    if not form_data["arrival_airline_name"]:
+        st.warning("Airline Name for Arrival is required as you selected 'air' as the arrival mode.")
+        
     if departure_travel_mode == "air":
-        departure_flight_number = st.text_input("Flight Number for Departure")
-        departure_airline_name = st.text_input("Airline Name for Departure")
-        form_data["departure_flight_number"] = departure_flight_number
-        form_data["departure_airline_name"] = departure_airline_name
+    form_data["departure_flight_number"] = st.text_input("Flight Number for Departure")
+    form_data["departure_airline_name"] = st.text_input("Airline Name for Departure")
+    if not form_data["departure_flight_number"]:
+        st.warning("Flight Number for Departure is required as you selected 'air' as the departure mode.")
+    if not form_data["departure_airline_name"]:
+        st.warning("Airline Name for Departure is required as you selected 'air' as the departure mode.")
+        
 else:
     # Default None for all transport-related keys when "Own Vechile"
     form_data["arrival_location"] = None
@@ -154,6 +161,14 @@ if st.button("Submit"):
         st.error("Invalid checkout date. Please select 26th or 27th January 2025.")
     elif arrival_travel_mode != "Own Vechile" and not form_data["arrival_location"]:
         st.error("Please provide the arrival location.")
+    elif arrival_travel_mode == "train" and not form_data["arrival_train_number"]:
+        st.error("Please enter the train number for arrival as 'train' is selected as the arrival mode.")
+    elif departure_travel_mode == "train" and not form_data["departure_train_number"]:
+        st.error("Please enter the train number for departure as 'train' is selected as the departure mode.")
+    elif arrival_travel_mode == "air" and (not form_data["arrival_flight_number"] or not form_data["arrival_airline_name"]):
+        st.error("Please enter both the flight number and airline name for arrival as 'air' is selected as the arrival mode.")
+    elif departure_travel_mode == "air" and (not form_data["departure_flight_number"] or not form_data["departure_airline_name"]):
+        st.error("Please enter both the flight number and airline name for departure as 'air' is selected as the departure mode.")
     elif not aadhaar_valid:
         st.error("Please ensure all guests have valid 12-digit Aadhaar numbers.")
     else:
