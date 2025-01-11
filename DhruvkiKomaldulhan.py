@@ -98,8 +98,6 @@ if arrival_travel_mode != "Own Vechile":
         form_data["departure_train_number"] = st.text_input("Train Number for Departure")
         if not form_data["departure_train_number"]:
             st.warning("Train Number for Departure is required as you selected 'train' as the departure mode.")
-    else:
-        form_data["departure_train_number"] = None
 
     # Flight number and airline name for arrival and departure
     if arrival_travel_mode == "air":
@@ -109,9 +107,6 @@ if arrival_travel_mode != "Own Vechile":
             st.warning("Please enter the flight number for arrival as 'air' is selected as the arrival mode.")
         if not form_data["arrival_airline_name"]:
             st.warning("Please enter the airline name for arrival as 'air' is selected as the arrival mode.")
-    else:
-        form_data["arrival_flight_number"] = None
-        form_data["arrival_airline_name"] = None
 
     if departure_travel_mode == "air":
         form_data["departure_flight_number"] = st.text_input("Flight Number for Departure")
@@ -120,16 +115,13 @@ if arrival_travel_mode != "Own Vechile":
             st.warning("Please enter the flight number for departure as 'air' is selected as the departure mode.")
         if not form_data["departure_airline_name"]:
             st.warning("Please enter the airline name for departure as 'air' is selected as the departure mode.")
-    else:
-        form_data["departure_flight_number"] = None
-        form_data["departure_airline_name"] = None
-        
+
 else:
     # Default None for all transport-related keys when "Own Vechile"
     form_data["arrival_location"] = None
     form_data["arrival_date"] = None
     form_data["arrival_time"] = None
-    form_data["departure_travel_mode"] = None
+    form_data["departure_travel_mode"] = None  # Ensure this key is initialized
     form_data["departure_date"] = None
     form_data["departure_time"] = None
     form_data["arrival_train_number"] = None
@@ -149,9 +141,7 @@ if checkout_date not in [datetime.date(2025, 1, 26), datetime.date(2025, 1, 27)]
 if checkout_date == datetime.date(2025, 1, 27):
     checkout_time = datetime.time(10, 0)
     st.markdown(
-        "Default Checkout time :"
-        "<span style='font-weight: bold; border-radius: 4px;'>10:00 AM</span> "
-        "on 27th January 2025.",
+        "Default Checkout time : <span style='font-weight: bold; border-radius: 4px;'>10:00 AM</span> on 27th January 2025.",
         unsafe_allow_html=True,
     )
 else:
@@ -162,7 +152,6 @@ form_data["checkout_time"] = checkout_time
 
 # Button to save the form data to PostgreSQL
 if st.button("Submit"):
-    # Validate data before submission
     if not contact_present:
         st.error("At least one contact number must be provided.")
     elif checkout_date not in [datetime.date(2025, 1, 26), datetime.date(2025, 1, 27)]:
@@ -171,18 +160,18 @@ if st.button("Submit"):
         st.error("Please provide the arrival location.")
     elif arrival_travel_mode == "train" and not form_data["arrival_train_number"]:
         st.error("Please enter the train number for arrival as 'train' is selected as the arrival mode.")
-    elif departure_travel_mode == "train" and not form_data["departure_train_number"]:
+    elif form_data.get("departure_travel_mode") == "train" and not form_data["departure_train_number"]:
         st.error("Please enter the train number for departure as 'train' is selected as the departure mode.")
     elif arrival_travel_mode == "air" and (not form_data["arrival_flight_number"] or not form_data["arrival_airline_name"]):
         st.error("Please enter both the flight number and airline name for arrival as 'air' is selected as the arrival mode.")
-    elif departure_travel_mode == "air" and (not form_data["departure_flight_number"] or not form_data["departure_airline_name"]):
+    elif form_data.get("departure_travel_mode") == "air" and (not form_data["departure_flight_number"] or not form_data["departure_airline_name"]):
         st.error("Please enter both the flight number and airline name for departure as 'air' is selected as the departure mode.")
     elif not aadhaar_valid:
         st.error("Please ensure all guests have valid 12-digit Aadhaar numbers.")
     else:
         # Convert the form data to a DataFrame
         guests_data = pd.DataFrame(form_data["guests"])
-
+        
         # Add the other fields to the dataframe
         guests_data['arrival_date'] = form_data["arrival_date"]
         guests_data['arrival_time'] = form_data["arrival_time"]
