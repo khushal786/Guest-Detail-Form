@@ -18,6 +18,16 @@ def get_db_connection():
 # Initialize the form data dictionary
 form_data = {}
 
+form_data["invited_by"] = st.selectbox(
+    "Invited By",
+    options=["Bobra Family", "Taunk Family", "Both"],
+    index=0  # Default selection
+)
+
+# Validate the new field
+if not form_data["invited_by"]:
+    st.warning("Please select who invited you.")
+    
 # Collect the number of guests
 num_guests = st.number_input("Number of Guests", min_value=1, max_value=10, step=1)
 
@@ -196,16 +206,17 @@ if st.button("Submit"):
         for index, row in guests_data.iterrows():
             cursor.execute("""
                 INSERT INTO guest_data (name, age, aadhaar, contact, arrival_date, arrival_time, arrival_location, 
-                                        checkout_date, checkout_time, departure_date, departure_time, 
-                                        arrival_travel_mode, departure_travel_mode, 
-                                        arrival_train_number, arrival_flight_number, departure_train_number, 
-                                        departure_flight_number, arrival_airline_name, departure_airline_name)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """, (row['name'], row['age'], row['aadhaar'], row['contact'], row['arrival_date'], row['arrival_time'],
-                  row['arrival_location'], row['checkout_date'], row['checkout_time'], row['departure_date'], 
-                  row['departure_time'], row['arrival_travel_mode'], row['departure_travel_mode'], 
-                  row['arrival_train_number'], row['arrival_flight_number'], row['departure_train_number'], 
-                  row['departure_flight_number'], row['arrival_airline_name'], row['departure_airline_name']))
+                                checkout_date, checkout_time, departure_date, departure_time, 
+                                arrival_travel_mode, departure_travel_mode, 
+                                arrival_train_number, arrival_flight_number, departure_train_number, 
+                                departure_flight_number, arrival_airline_name, departure_airline_name, invited_by)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """,(row['name'], row['age'], row['aadhaar'], row['contact'], row['arrival_date'], row['arrival_time'],
+                row['arrival_location'], row['checkout_date'], row['checkout_time'], row['departure_date'], 
+                row['departure_time'], row['arrival_travel_mode'], row['departure_travel_mode'], 
+                row['arrival_train_number'], row['arrival_flight_number'], row['departure_train_number'], 
+                row['departure_flight_number'], row['arrival_airline_name'], row['departure_airline_name'], 
+                form_data["invited_by"]))
         conn.commit()
         cursor.close()
         conn.close()
