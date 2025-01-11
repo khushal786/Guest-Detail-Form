@@ -18,26 +18,23 @@ def get_db_connection():
 # Initialize the form data dictionary
 form_data = {}
 
-st.markdown("### Invited By")
-invited_by_bobra = st.checkbox("Bobra Family")
-invited_by_taunk = st.checkbox("Taunk Family")
-invited_by_both = st.checkbox("Both")
+if "invited_by" not in st.session_state:
+    st.session_state["invited_by"] = None
 
-# Validate the new field
-if invited_by_both:
-    invited_by = "Both"
-elif invited_by_bobra:
-    invited_by = "Bobra Family"
-elif invited_by_taunk:
-    invited_by = "Taunk Family"
+# Checkbox options
+if st.checkbox("Bobra Family", value=(st.session_state["invited_by"] == "Bobra Family")):
+    st.session_state["invited_by"] = "Bobra Family"
+elif st.checkbox("Taunk Family", value=(st.session_state["invited_by"] == "Taunk Family")):
+    st.session_state["invited_by"] = "Taunk Family"
 else:
-    invited_by = None
+    st.session_state["invited_by"] = None
 
-form_data["invited_by"] = invited_by
+# Store the value in form_data
+form_data["invited_by"] = st.session_state["invited_by"]
 
-# Validation to ensure one option is selected
-if not invited_by:
-    st.error("Please select who invited you (Bobra Family, Taunk Family, or Both).")
+# Validation
+if not st.session_state["invited_by"]:
+    st.error("Please select one of the options: Bobra Family OR Taunk Family")
     
 # Collect the number of guests
 num_guests = st.number_input("Number of Guests", min_value=1, max_value=10, step=1)
