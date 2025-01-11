@@ -18,15 +18,26 @@ def get_db_connection():
 # Initialize the form data dictionary
 form_data = {}
 
-form_data["invited_by"] = st.selectbox(
-    "Invited By",
-    options=["Bobra Family", "Taunk Family", "Both"],
-    index=0  # Default selection
-)
+fst.markdown("### Invited By")
+invited_by_bobra = st.checkbox("Bobra Family")
+invited_by_taunk = st.checkbox("Taunk Family")
+invited_by_both = st.checkbox("Both")
 
 # Validate the new field
-if not form_data["invited_by"]:
-    st.warning("Please select who invited you.")
+if invited_by_both:
+    invited_by = "Both"
+elif invited_by_bobra:
+    invited_by = "Bobra Family"
+elif invited_by_taunk:
+    invited_by = "Taunk Family"
+else:
+    invited_by = None
+
+form_data["invited_by"] = invited_by
+
+# Validation to ensure one option is selected
+if not invited_by:
+    st.error("Please select who invited you (Bobra Family, Taunk Family, or Both).")
     
 # Collect the number of guests
 num_guests = st.number_input("Number of Guests", min_value=1, max_value=10, step=1)
