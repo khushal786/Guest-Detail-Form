@@ -18,7 +18,7 @@ def get_db_connection():
 # Initialize the form data dictionary
 form_data = {}
 
-fst.markdown("### Invited By")
+st.markdown("### Invited By")
 invited_by_bobra = st.checkbox("Bobra Family")
 invited_by_taunk = st.checkbox("Taunk Family")
 invited_by_both = st.checkbox("Both")
