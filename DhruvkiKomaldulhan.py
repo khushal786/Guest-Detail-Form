@@ -209,7 +209,7 @@ if st.button("Submit"):
         guests_data['departure_flight_number'] = form_data["departure_flight_number"]
         guests_data['arrival_airline_name'] = form_data["arrival_airline_name"]
         guests_data['departure_airline_name'] = form_data["departure_airline_name"]
-        guest_data['invited_by'] = form_data['invited_by']
+        guests_data['invited_by'] = form_data['invited_by']
 
         # Capture current date and time
         current_datetime = datetime.datetime.now()
