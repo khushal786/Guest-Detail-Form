@@ -212,20 +212,20 @@ if st.button("Submit"):
         guest_data['invited_by'] = form_data['invited_by']
 
         # Capture current date and time
-            current_datetime = datetime.datetime.now()
-            submission_date = current_datetime.strftime("%d/%m/%Y")  # Format date as dd/mm/yyyy
-            submission_time = current_datetime.strftime("%H:%M:%S")  # Format time as HH:MM:SS (24-hour format)
+        current_datetime = datetime.datetime.now()
+        submission_date = current_datetime.strftime("%d/%m/%Y")  # Format date as dd/mm/yyyy
+        submission_time = current_datetime.strftime("%H:%M:%S")  # Format time as HH:MM:SS (24-hour format)
         
         # Add submission date and time to the form data
-            form_data["submission_date"] = submission_date
-            form_data["submission_time"] = submission_time
+        form_data["submission_date"] = submission_date
+        form_data["submission_time"] = submission_time
 
         # Log submission for debugging (Optional)
-            st.write(f"Submission Date: {submission_date}")
-            st.write(f"Submission Time: {submission_time}")
+        st.write(f"Submission Date: {submission_date}")
+        st.write(f"Submission Time: {submission_time}")
 
             # Simulate saving the form data (e.g., save to a database)
-            st.success(f"Form submitted successfully on {submission_date} at {submission_time} 🎉")
+        st.success(f"Form submitted successfully on {submission_date} at {submission_time} 🎉")
 
         # Save the data to PostgreSQL
         conn = get_db_connection()
