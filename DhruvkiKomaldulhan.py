@@ -3,6 +3,7 @@ import pandas as pd
 import datetime
 import psycopg2
 import datetime
+import pytz
 
 st.image("image_header.png")
 
@@ -212,9 +213,11 @@ if st.button("Submit"):
         guests_data['invited_by'] = form_data['invited_by']
 
         # Capture current date and time
+        ist = pytz.timezone('Asia/Kolkata')
+        now_ist = datetime.now(ist)
         current_datetime = datetime.datetime.now()
-        submission_date = current_datetime.strftime("%d/%m/%Y")  # Format date as dd/mm/yyyy
-        submission_time = current_datetime.strftime("%H:%M:%S")  # Format time as HH:MM:SS (24-hour format)
+        submission_date = now_ist.strftime('%Y-%m-%d')  # YYYY-MM-DD
+        submission_time = now_ist.strftime('%H:%M:%S')  # HH:MM:SS in 24-hour format
         
         # Add submission date and time to the form data
         form_data["submission_date"] = submission_date
