@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import datetime
 import psycopg2
-import datetime
+from datetime import datetime
 import pytz
 
 st.image("image_header.png")
