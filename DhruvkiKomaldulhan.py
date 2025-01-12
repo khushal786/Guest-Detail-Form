@@ -9,10 +9,10 @@ st.image("image_header.png")
 # PostgreSQL connection setup
 def get_db_connection():
     connection = psycopg2.connect(
-        host="34.55.180.159",
-        database="postgres",
-        user = postgres,
-        password = postgres108
+        db_user = st.secrets["database"]["user"]
+        db_password = st.secrets["database"]["password"]
+        db_host = st.secrets["database"]["host"]
+        db_name = st.secrets["database"]["database"]
     )
     return connection
 
