@@ -237,14 +237,14 @@ if st.button("Submit"):
                                 checkout_date, checkout_time, departure_date, departure_time, 
                                 arrival_travel_mode, departure_travel_mode, 
                                 arrival_train_number, arrival_flight_number, departure_train_number, 
-                                departure_flight_number, arrival_airline_name, departure_airline_name, invited_by)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                                departure_flight_number, arrival_airline_name, departure_airline_name, invited_by, submission_date, submission_time)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """,(row['name'], row['age'], row['aadhaar'], row['contact'], row['arrival_date'], row['arrival_time'],
                 row['arrival_location'], row['checkout_date'], row['checkout_time'], row['departure_date'], 
                 row['departure_time'], row['arrival_travel_mode'], row['departure_travel_mode'], 
                 row['arrival_train_number'], row['arrival_flight_number'], row['departure_train_number'], 
                 row['departure_flight_number'], row['arrival_airline_name'], row['departure_airline_name'], 
-                form_data["invited_by"]))
+                form_data["invited_by"], form_data["submission_date"], form_data["submission_time"]))
         conn.commit()
         cursor.close()
         conn.close()
