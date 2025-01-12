@@ -11,8 +11,8 @@ def get_db_connection():
     connection = psycopg2.connect(
         host="34.55.180.159",
         database="postgres",
-        user = st.secrets[DB_USER],
-        password = st.secrets[DB_PASSWORD]
+        user = postgres,
+        password = postgres108
     )
     return connection
 
