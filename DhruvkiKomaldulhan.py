@@ -172,6 +172,8 @@ form_data["checkout_time"] = checkout_time
 if st.button("Submit"):
     if not contact_present:
         st.error("At least one contact number must be provided.")
+    elif not form_data["invited_by"]:
+        st.error("Please select who invited you (Bobra Family or Taunk Family) before submitting the form.")
     elif checkout_date not in [datetime.date(2025, 1, 26), datetime.date(2025, 1, 27)]:
         st.error("Invalid checkout date. Please select 26th or 27th January 2025.")
     elif arrival_travel_mode != "Own Vechile" and not form_data["arrival_location"]:
@@ -206,6 +208,7 @@ if st.button("Submit"):
         guests_data['departure_flight_number'] = form_data["departure_flight_number"]
         guests_data['arrival_airline_name'] = form_data["arrival_airline_name"]
         guests_data['departure_airline_name'] = form_data["departure_airline_name"]
+        guest_data['invited_by'] = form_data['invited_by']
 
         # Save the data to PostgreSQL
         conn = get_db_connection()
