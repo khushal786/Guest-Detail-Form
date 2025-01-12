@@ -6,13 +6,19 @@ import pytz
 
 st.image("image_header.png")
 
-# PostgreSQL connection setup
+# Accessing database secrets
+db_user = st.secrets["database"]["user"]
+db_password = st.secrets["database"]["password"]
+db_host = st.secrets["database"]["host"]
+db_name = st.secrets["database"]["database"]
+
+# Function to establish a database connection
 def get_db_connection():
     connection = psycopg2.connect(
-        db_user = st.secrets["database"]["user"],
-        db_password = st.secrets["database"]["password"],
-        db_host = st.secrets["database"]["host"],
-        db_name = st.secrets["database"]["database"],
+        host=db_host,
+        database=db_name,
+        user=db_user,
+        password=db_password
     )
     return connection
 
