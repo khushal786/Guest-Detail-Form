@@ -213,7 +213,7 @@ if st.button("Submit"):
 
         # Capture current date and time
         ist = pytz.timezone('Asia/Kolkata')
-        now_ist = datetime.now(ist)
+        now_ist = datetime.datetime.now(ist)
         current_datetime = datetime.datetime.now()
         submission_date = now_ist.strftime('%d-%m-%Y')  # YYYY-MM-DD
         submission_time = now_ist.strftime('%H:%M:%S')  # HH:MM:SS in 24-hour format
