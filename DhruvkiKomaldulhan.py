@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import datetime
 import psycopg2
-from datetime import datetime
 import pytz
 
 st.image("image_header.png")
@@ -216,7 +215,7 @@ if st.button("Submit"):
         ist = pytz.timezone('Asia/Kolkata')
         now_ist = datetime.now(ist)
         current_datetime = datetime.datetime.now()
-        submission_date = now_ist.strftime('%Y-%m-%d')  # YYYY-MM-DD
+        submission_date = now_ist.strftime('%d-%m-%Y')  # YYYY-MM-DD
         submission_time = now_ist.strftime('%H:%M:%S')  # HH:MM:SS in 24-hour format
         
         # Add submission date and time to the form data
